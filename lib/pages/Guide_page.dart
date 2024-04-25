@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class GuideScreen extends StatelessWidget {
+  final int id;
+  const GuideScreen({required this.id});
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home Screen')),
+      appBar: AppBar(title: const Text('Guide Screen')),
       body: Column(
         children: <Widget>[
           ElevatedButton(
