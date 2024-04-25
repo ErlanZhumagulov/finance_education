@@ -29,7 +29,8 @@ final routes = [
       ),
       GoRoute(
         path: 'guide/:id',
-        builder: (context,state) => GuideScreen(id: state.pathParameters['id'].toString()),
+        name: 'guide',
+        builder: (context,state) => GuideScreen(id: int.parse(state.pathParameters["id"].toString())),
       ),
     ],
   ),

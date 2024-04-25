@@ -53,7 +53,7 @@ class ListItem extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Text(guide.title),
       ),
-      onTap: () => context.goNamed('guide', pathParameters: {}),
+      onTap: () => context.goNamed('guide', pathParameters: {"id":guide.id.toString()}),
     );
   }
 }

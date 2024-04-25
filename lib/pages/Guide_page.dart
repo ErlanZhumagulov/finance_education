@@ -3,10 +3,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Guides.dart';
+
 
 class GuideScreen extends StatelessWidget {
-  final int id;
-  const GuideScreen({required this.id});
+  GuideScreen({required this.id});
+  int id;
 
 
   @override
@@ -15,10 +17,8 @@ class GuideScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Guide Screen')),
       body: Column(
         children: <Widget>[
-          ElevatedButton(
-            onPressed: () => context.go('/details'),
-            child: const Text('Go to the Details screen'),
-          ),
+          Text(guides[id].title),
+          Text(guides[id].content),
           ElevatedButton(
             onPressed: () => context.go('/guides'),
             child: const Text('Go to the Guides screen'),
