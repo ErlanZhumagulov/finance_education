@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailsScreen extends StatefulWidget {
-  int id;
-
-  DetailsScreen({required this.id});
+  const  DetailsScreen({super.key});
   // const DetailsScreen({super.key});
 
   @override
