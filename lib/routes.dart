@@ -1,5 +1,5 @@
 import 'package:finance_education/pages/Guide_page.dart';
-import 'package:finance_education/pages/guides_page.dart';
+import 'package:finance_education/pages/guidesSelect_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,9 +22,9 @@ final routes = [
         },
       ),
       GoRoute(
-        path: 'guides',
+        path: 'guidesSelect',
         builder: (BuildContext context, GoRouterState state) {
-          return const GuidesScreen();
+          return const GuidesSelectScreen();
         },
       ),
       GoRoute(

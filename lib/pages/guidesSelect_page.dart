@@ -5,14 +5,14 @@ import 'package:go_router/go_router.dart';
 import '../Guides.dart';
 import '../models/GuideModel.dart';
 
-class GuidesScreen extends StatefulWidget {
-  const GuidesScreen({super.key});
+class GuidesSelectScreen extends StatefulWidget {
+  const GuidesSelectScreen({super.key});
 
   @override
-  State<GuidesScreen> createState() => _GuidesScreen();
+  State<GuidesSelectScreen> createState() => _GuidesSelectScreen();
 }
 
-class _GuidesScreen extends State<GuidesScreen> {
+class _GuidesSelectScreen extends State<GuidesSelectScreen> {
 
 
   @override
