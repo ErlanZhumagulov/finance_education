@@ -14,11 +14,16 @@ final routes = [
     },
     routes: <RouteBase>[
       GoRoute(
-        path: 'details',
+        path: '/details/:id',
+        name: 'details',
         builder: (BuildContext context, GoRouterState state) {
-          return const DetailsScreen();
+          return DetailsScreen(id: int.parse(state.pathParameters['id'].toString()));
         },
       ),
+
+
+
+
     ],
   ),
 ];
