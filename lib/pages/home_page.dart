@@ -22,6 +22,10 @@ class HomeScreen extends StatelessWidget {
             child: const Text('Go to the Guides screen'),
           ),
           ElevatedButton(
+            onPressed: () => context.go('/testSelect'),
+            child: const Text('Go to the Tests screen'),
+          ),
+          ElevatedButton(
             onPressed: () => context.go('/plan-buy'),
             child: const Text('Страница учета средств'),
           ),

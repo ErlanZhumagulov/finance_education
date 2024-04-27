@@ -10,7 +10,6 @@ class GuideScreen extends StatelessWidget {
   GuideScreen({required this.id});
   int id;
 
-
   @override
   Widget build(BuildContext context) {
     Map<String,String> contentMap = guides[id].content;
