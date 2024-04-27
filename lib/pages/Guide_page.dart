@@ -1,5 +1,6 @@
 
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,27 +13,36 @@ class GuideScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String,String> contentMap = guides[id].content;
+    List<Map<String,String>> contentMap = guides[id].content;
+    List<Widget> widgetList = [];
+
+    for (var entry in contentMap){
+      if (entry.entries.first.key == 'p') {
+        widgetList.add(ParagraphWidget(text: entry.entries.first.value));
+      } else if (entry.entries.first.key == 'note') {
+        widgetList.add(NoteWidget(text: entry.entries.first.value));
+      } else {
+        widgetList.add(DefaultWidget(text: entry.entries.first.value));
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('Guide Screen')),
-      body: Column(
+      body: ListView(
+
         children: <Widget>[
           Text(guides[id].title),
           Column(
-            children: contentMap.entries.map((entry) {
-              if (entry.key == 'p') {
-                return ParagraphWidget(text: entry.value);
-              } else if (entry.key == 'note') {
-                return NoteWidget(text: entry.value);
-              } else {
-                return DefaultWidget(text: entry.value);
-              }
-            }).toList(),
+            children: widgetList,
           ),
-          ElevatedButton(
-            onPressed: () => context.goNamed('test', pathParameters: {'id':id.toString()}),
-            child: const Text('Решить тест!'),
-          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical:25.0,horizontal: 5.0),
+            child:
+            ElevatedButton(
+              onPressed: () => context.goNamed('test', pathParameters: {'id':id.toString()}),
+              child: const Text('Решить тест!'),
+            ),
+          )
         ],
       ),
     );
@@ -48,6 +58,7 @@ class ParagraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical:10.0,horizontal: 5.0),
       child: Text(
         text,
         style: TextStyle(fontSize: 16),

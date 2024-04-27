@@ -11,7 +11,7 @@ import 'dart:convert';
 class Guide {
   int id;
   String title;
-  Map<String, String> content; //<Тег, контент>
+  List<Map<String, String>> content; //<Тег, контент>
   bool blocked;
   String status;
 

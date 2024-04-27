@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             child: const Text('Go to the Details screen'),
           ),
           ElevatedButton(
-            onPressed: () => context.go('/guidesSelect'),
+            onPressed: () => context.go('/guides'),
             child: const Text('Go to the Guides screen'),
           ),
           ElevatedButton(

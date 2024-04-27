@@ -25,7 +25,7 @@ final routes = [
         },
       ),
       GoRoute(
-        path: 'guidesSelect',
+        path: 'guides',
         builder: (BuildContext context, GoRouterState state) {
           return const GuidesSelectScreen();
         },
@@ -37,7 +37,7 @@ final routes = [
         },
       ),
       GoRoute(
-        path: 'guide/:id',
+        path: 'guides/:id',
         name: 'guide',
         builder: (context,state) => GuideScreen(id: int.parse(state.pathParameters["id"].toString())),
       ),

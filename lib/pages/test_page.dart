@@ -29,11 +29,13 @@ class _TestScreen extends State<TestScreen> {
     List<Task> tasks = test.tasks;
     Task task = tasks[taskInd];
     return Scaffold(
-      appBar: AppBar(title: const Text('Test Screen')),
+      appBar: AppBar(title: Text("тема " +(id+1).toString() + ": " + guides[id].title)),
       body: Column(
         children: <Widget>[
-          Text("тема " +(id+1).toString() + ": " + guides[id].title),
-          Text("Вопрос " +(taskInd+1).toString() + ": " + task.question),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child:
+            Text("Вопрос " +(taskInd+1).toString() + ": " + task.question, style: TextStyle(fontSize: 18.0)),
+          ),
           Center(
             child: Column(
               children: task.answers.asMap().entries.map((entry) {
@@ -57,7 +59,7 @@ class _TestScreen extends State<TestScreen> {
               answering();
               taskInd += 1;
             },
-            child: const Text('Go to the next question'),
+            child: const Text('Ответить'),
           )
         ],
       ),
@@ -85,7 +87,7 @@ class _TestScreen extends State<TestScreen> {
                   Navigator.of(context).pop();
                   context.goNamed("testSelect");
                 },
-                child: Text('OK'),
+                child: Text('Ок, вернуться к тестам'),
               ),
             ],
           );
@@ -96,8 +98,8 @@ class _TestScreen extends State<TestScreen> {
           context: context,
           builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Incorrect!'),
-          content: Text('Try again!'),
+          title: Text('Неверно!'),
+          content: Text('Правильный ответ: ' + tests[id].tasks[taskInd].answers[tests[id].tasks[taskInd].ans]),
           actions: [
             TextButton(
               onPressed: () {
