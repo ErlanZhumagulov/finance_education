@@ -50,7 +50,10 @@ final routes = [
       GoRoute(
         path: 'test/:id',
         name: 'test',
-        builder: (context,state) => TestScreen(id: int.parse(state.pathParameters["id"].toString())),
+        builder: (context,state) {
+          int id = int.parse(state.pathParameters["id"].toString());
+          return TestScreen(id: id);
+        }
       ),
     ],
   ),
