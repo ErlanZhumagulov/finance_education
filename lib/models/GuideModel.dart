@@ -20,7 +20,7 @@ class Guide {
     required this.title,
     required this.content,
     required this.blocked,
-    required this.status,
+    this.status = "not readed",
   });
   //
   // factory Guide.fromMap(Map<String, dynamic> json) => Guide(
