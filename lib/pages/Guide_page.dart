@@ -27,11 +27,10 @@ class GuideScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Guide Screen')),
+      appBar: AppBar(title: Text(guides[id].title)),
       body: ListView(
 
         children: <Widget>[
-          Text(guides[id].title),
           Column(
             children: widgetList,
           ),

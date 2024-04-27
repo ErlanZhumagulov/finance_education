@@ -18,7 +18,7 @@ class _GuidesSelectScreen extends State<GuidesSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('guide Screen')),
+      appBar: AppBar(title: const Text('Узнаем новое!')),
       body: Center(
         //crossAxisAlignment: CrossAxisAlignment.start,
         // children: <Widget>[

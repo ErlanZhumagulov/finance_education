@@ -18,7 +18,7 @@ class _TestSelectScreen extends State<TestSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Tests Screen')),
+      appBar: AppBar(title: const Text('Проверим знания!')),
       body: Center(
         //crossAxisAlignment: CrossAxisAlignment.start,
         // children: <Widget>[

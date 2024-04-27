@@ -69,6 +69,7 @@ class _TestScreen extends State<TestScreen> {
   void answering(){
     selectedAnswers[taskInd] = selectedAns;
     List<Task> tasks = tests[id].tasks;
+    String rightAns = tasks[taskInd].answers[tasks[taskInd].ans];
     if (taskInd +1 >= tasks.length){
       int score = 0;
       showDialog(
@@ -93,13 +94,13 @@ class _TestScreen extends State<TestScreen> {
           );
       });
     }
-    else if (selectedAns != tests[id].tasks[taskInd].ans){
+    else if (selectedAns != tasks[taskInd].ans){
       showDialog(
           context: context,
           builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Неверно!'),
-          content: Text('Правильный ответ: ' + tests[id].tasks[taskInd].answers[tests[id].tasks[taskInd].ans]),
+          content: Text('Правильный ответ: ' + rightAns),
           actions: [
             TextButton(
               onPressed: () {
