@@ -20,6 +20,7 @@ class _TestScreen extends State<TestScreen> {
   final int id;
   int taskInd;
   int selectedAns = -1;
+  Map<int,int> selectedAnswers = {};
   _TestScreen({required this.id, this.taskInd=0});
 
   @override
@@ -51,69 +52,108 @@ class _TestScreen extends State<TestScreen> {
               }).toList(),
             )
           ),
-
-          taskInd + 1 < tasks.length
-          ? ElevatedButton(
+          ElevatedButton(
             onPressed: () {
-              taskInd += 1;
               answering();
-              setState(() {
-                selectedAns = -1;
-              });
+              taskInd += 1;
             },
             child: const Text('Go to the next question'),
           )
-          : ElevatedButton(
-            onPressed: () {
-              answering();
-              setState(() {
-                selectedAns = -1;
-              });
-            },
-            child: const Text('Посмотреть результат'),
-          ),
         ],
       ),
     );
   }
-}
 
-void answering(){
+  void answering(){
+    selectedAnswers[taskInd] = selectedAns;
+    List<Task> tasks = tests[id].tasks;
+    if (taskInd +1 >= tasks.length){
+      int score = 0;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          for (int i = 0; i < tasks.length; i++) {
+            if(tasks[i].ans == selectedAnswers[i]) score +=1;
+          }
 
-}
-
-class ListItemTask extends StatelessWidget {
-  final Task task;
-
-  ListItemTask({required this.task});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[ Text(task.question),
-        Center(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: task.answers.length,
-              itemBuilder: (context, index) {
-            return ListItemAnswers(task: task, index: index);
-          })
-        )
-    ]);
+          return AlertDialog(
+            title: Text('Тестирование окончено!'),
+            content: Text('ваш результат ' + score.toString() + " из " + tasks.length.toString()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.goNamed("testSelect");
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+      });
+    }
+    else if (selectedAns != tests[id].tasks[taskInd].ans){
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Incorrect!'),
+          content: Text('Try again!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  selectedAns = -1;
+                });
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      });
+    }
+    else {
+      setState(() {
+        selectedAns = -1;
+      });
+    }
   }
 }
 
-class ListItemAnswers extends StatelessWidget {
-  final Task task;
-  final int index;
 
-  ListItemAnswers({required this.task, required this.index});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Text(task.answers[index]),
-    );
-  }
-}
+//
+// class ListItemTask extends StatelessWidget {
+//   final Task task;
+//
+//   ListItemTask({required this.task});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: <Widget>[ Text(task.question),
+//         Center(
+//           child: ListView.builder(
+//               shrinkWrap: true,
+//               itemCount: task.answers.length,
+//               itemBuilder: (context, index) {
+//             return ListItemAnswers(task: task, index: index);
+//           })
+//         )
+//     ]);
+//   }
+// }
+//
+// class ListItemAnswers extends StatelessWidget {
+//   final Task task;
+//   final int index;
+//
+//   ListItemAnswers({required this.task, required this.index});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.all(16.0),
+//       child: Text(task.answers[index]),
+//     );
+//   }
+// }

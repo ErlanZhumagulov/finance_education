@@ -30,8 +30,8 @@ class GuideScreen extends StatelessWidget {
             }).toList(),
           ),
           ElevatedButton(
-            onPressed: () => context.go('/guidesSelect'),
-            child: const Text('Go to the Guides screen'),
+            onPressed: () => context.goNamed('test', pathParameters: {'id':id.toString()}),
+            child: const Text('Решить тест!'),
           ),
         ],
       ),

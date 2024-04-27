@@ -43,6 +43,7 @@ final routes = [
       ),
       GoRoute(
         path: 'testSelect',
+        name: "testSelect",
         builder: (BuildContext context, GoRouterState state) {
           return const TestSelectScreen();
         },
