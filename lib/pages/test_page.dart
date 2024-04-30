@@ -1,5 +1,3 @@
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,79 +7,101 @@ import '../models/TaskModel.dart';
 import '../models/TestModel.dart';
 
 class TestScreen extends StatefulWidget {
-  TestScreen({required this.id});
-  int id;
+  final int id;
+
+  const TestScreen({required this.id});
 
   @override
-  State<TestScreen> createState() => _TestScreen(id: id);
+  State<TestScreen> createState() => _TestScreenState();
 }
 
-class _TestScreen extends State<TestScreen> {
-  final int id;
-  int taskInd;
-  int selectedAns = -1;
-  Map<int,int> selectedAnswers = {};
-  _TestScreen({required this.id, this.taskInd=0});
+class _TestScreenState extends State<TestScreen> {
+  int taskIndex = 0;
+  int? selectedAnswer;
+  Map<int, int> selectedAnswers = {};
+
+  late Test test;
+  late List<Task> tasks;
+
+  @override
+  void initState() {
+    super.initState();
+    test = tests.firstWhere((test) => test.guideId == widget.id);
+    tasks = test.tasks;
+  }
 
   @override
   Widget build(BuildContext context) {
-    Test test = tests.where((test) => test.guideId == id).first;
-    List<Task> tasks = test.tasks;
-    Task task = tasks[taskInd];
+    Task currentTask = tasks[taskIndex];
+
     return Scaffold(
-      appBar: AppBar(title: Text("тема " +(id+1).toString() + ": " + guides[id].title)),
-      body: Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child:
-            Text("Вопрос " +(taskInd+1).toString() + ": " + task.question, style: TextStyle(fontSize: 18.0)),
-          ),
-          Center(
-            child: Column(
-              children: task.answers.asMap().entries.map((entry) {
+      appBar: AppBar(
+        title: Text("Тема ${widget.id + 1}: ${guides[widget.id].title}"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Вопрос ${taskIndex + 1}: ${currentTask.question}",
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 20),
+            Column(
+              children: currentTask.answers.asMap().entries.map((entry) {
                 int index = entry.key;
                 String option = entry.value;
                 return RadioListTile<int>(
                   title: Text(option),
                   value: index,
-                  groupValue: selectedAns,
+                  groupValue: selectedAnswer,
                   onChanged: (int? value) {
                     setState(() {
-                      selectedAns = value!;
+                      selectedAnswer = value!;
                     });
                   },
                 );
               }).toList(),
-            )
-          ),
-          ElevatedButton(
-            onPressed: () {
-              answering();
-              taskInd += 1;
-            },
-            child: const Text('Ответить'),
-          )
-        ],
+            ),
+            SizedBox(height: 20),
+            SizedBox( // Wrap ElevatedButton with SizedBox to control its width
+              width: double.infinity, // Stretch button to full width
+              child: ElevatedButton(
+                onPressed: () {
+                  _handleAnswer();
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 16.0), // Increase vertical padding
+                  textStyle: TextStyle(fontSize: 20.0), // Increase font size
+                ),
+                child: Text(
+                  'Ответить',
+                  style: TextStyle(fontSize: 20.0), // Increase font size
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  void answering(){
-    selectedAnswers[taskInd] = selectedAns;
-    List<Task> tasks = tests[id].tasks;
-    String rightAns = tasks[taskInd].answers[tasks[taskInd].ans];
-    if (taskInd +1 >= tasks.length){
+  void _handleAnswer() {
+    selectedAnswers[taskIndex] = selectedAnswer ?? -1;
+
+    if (taskIndex + 1 >= tasks.length) {
       int score = 0;
+      for (int i = 0; i < tasks.length; i++) {
+        if (tasks[i].ans == selectedAnswers[i]) score += 1;
+      }
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          for (int i = 0; i < tasks.length; i++) {
-            if(tasks[i].ans == selectedAnswers[i]) score +=1;
-          }
-
           return AlertDialog(
             title: Text('Тестирование окончено!'),
-            content: Text('ваш результат ' + score.toString() + " из " + tasks.length.toString()),
+            content: Text('Ваш результат: $score из ${tasks.length}'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -92,71 +112,33 @@ class _TestScreen extends State<TestScreen> {
               ),
             ],
           );
-      });
-    }
-    else if (selectedAns != tasks[taskInd].ans){
+        },
+      );
+    } else {
+      bool isCorrect = selectedAnswer == tasks[taskIndex].ans;
+      String rightAnswer = tasks[taskIndex].answers[tasks[taskIndex].ans];
+
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Неверно!'),
-          content: Text('Правильный ответ: ' + rightAns),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {
-                  selectedAns = -1;
-                });
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      });
-    }
-    else {
-      setState(() {
-        selectedAns = -1;
-      });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: isCorrect ? Text('Правильно!') : Text('Неверно!'),
+            content: isCorrect ? null : Text('Правильный ответ: $rightAnswer'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    selectedAnswer = null;
+                    taskIndex++;
+                  });
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }
-
-
-//
-// class ListItemTask extends StatelessWidget {
-//   final Task task;
-//
-//   ListItemTask({required this.task});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: <Widget>[ Text(task.question),
-//         Center(
-//           child: ListView.builder(
-//               shrinkWrap: true,
-//               itemCount: task.answers.length,
-//               itemBuilder: (context, index) {
-//             return ListItemAnswers(task: task, index: index);
-//           })
-//         )
-//     ]);
-//   }
-// }
-//
-// class ListItemAnswers extends StatelessWidget {
-//   final Task task;
-//   final int index;
-//
-//   ListItemAnswers({required this.task, required this.index});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.all(16.0),
-//       child: Text(task.answers[index]),
-//     );
-//   }
-// }

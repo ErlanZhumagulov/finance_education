@@ -1,4 +1,4 @@
-import 'package:finance_education/pages/Guide_page.dart';
+import 'package:finance_education/pages/guide_page.dart';
 import 'package:finance_education/pages/guidesSelect_page.dart';
 import 'package:finance_education/pages/plan_buy_page.dart';
 import 'package:finance_education/pages/test_page.dart';
@@ -32,8 +32,9 @@ final routes = [
       ),
       GoRoute(
         path: 'plan-buy',
+        name: 'plan-buy',
         builder: (BuildContext context, GoRouterState state) {
-          return PlanBuyScreen();
+          return  FinancialLiteracyApp();
         },
       ),
       GoRoute(

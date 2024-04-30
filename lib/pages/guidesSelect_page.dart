@@ -5,40 +5,37 @@ import 'package:go_router/go_router.dart';
 import '../Guides.dart';
 import '../models/GuideModel.dart';
 
-class GuidesSelectScreen extends StatefulWidget {
-  const GuidesSelectScreen({super.key});
-
-  @override
-  State<GuidesSelectScreen> createState() => _GuidesSelectScreen();
-}
-
-class _GuidesSelectScreen extends State<GuidesSelectScreen> {
-
+class GuidesSelectScreen extends StatelessWidget {
+  const GuidesSelectScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Узнаем новое!')),
-      body: Center(
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        // children: <Widget>[
-        // ElevatedButton(
-        //   onPressed: () => context.go('/'),
-        //   child: const Text('Go back to the Home screen'),
-        // ),
-        child:
-        ListView.builder(
-          itemCount: guides.length,
-          itemBuilder: (context, index) {
-            return ListItem(
-              guide: guides[index]
-            );
-          },
-        ),
+      appBar: AppBar(
+        title: const Text('Узнаем новое!'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.separated(
+              itemCount: guides.length,
+              separatorBuilder: (context, index) => Divider(),
+              itemBuilder: (context, index) {
+                return ListItem(guide: guides[index]);
+              },
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => context.go('/'),
+            child: const Text('Вернуться на главный экран'),
+          ),
+        ],
       ),
     );
   }
 }
+
+
 
 
 class ListItem extends StatelessWidget {
@@ -49,11 +46,19 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text(guide.title),
+      onTap: () => context.goNamed('guide', pathParameters: {'id': guide.id.toString()}),
+      child: ListTile(
+        leading: Icon(Icons.book), // Иконка для каждого элемента списка
+        title: Text(
+          guide.title,
+          style: TextStyle(fontSize: 16.0),
+        ),
+        subtitle: Text(
+          guide.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
-      onTap: () => context.goNamed('guide', pathParameters: {"id":guide.id.toString()}),
     );
   }
 }

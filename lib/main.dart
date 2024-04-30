@@ -1,5 +1,6 @@
 
 import 'package:finance_education/routes.dart';
+import 'package:finance_education/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: AppTheme.yellowTheme,
       routerConfig: _router,
     );
   }
