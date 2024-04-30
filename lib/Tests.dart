@@ -4,7 +4,7 @@ import 'models/TestModel.dart';
 
 List<Test> tests = [
   Test(
-    guideId: 0,
+    guideId: -1,
     title: "Квартирный вопрос",
     tasks: [
       Task(question: "Кто живет на дне океана?", ans: 1, answers: [
@@ -19,8 +19,31 @@ List<Test> tests = [
       ]),
     ]
   ),
-
-
+  Test(
+      guideId: 0,
+      title: guides[0].title,
+      tasks: [
+        Task(question: "Выбери из приведенных ниже услуг ту, которая НЕ относится к финансовым ", ans: 2, answers: [
+          "банковские услуги",
+          "услуги по пенсионному накоплению",
+          "консультационные услуги"
+        ]),
+        Task(question: "Относится ли к финансовым услугам покупка и продажа ценных бумаг?", ans: 0, answers: [
+          "да",
+          "нет"
+        ]),
+        Task(question: "Что такое финансовая организация?", ans: 3, answers: [
+          "организация, раздающая деньги",
+          "хранилище финансов",
+          "организация выпускающая денежные знаки",
+          "организация, оказывающая финансовые услуги"
+        ]),
+        Task(question: "Может ли финансовая организация действовать без государственного разрешения?", ans: 1, answers: [
+          "да",
+          "нет"
+        ]),
+      ]
+  ),
   Test(
     guideId: 1,
     title: guides[1].title,
@@ -58,8 +81,8 @@ List<Test> tests = [
 
 
   Test(
-    guideId: 1,
-    title: guides[1].title,
+    guideId: 2,
+    title: guides[2].title,
     tasks: [
       Task(question: "Вложение с целью прибыли:",
           ans: 0,
