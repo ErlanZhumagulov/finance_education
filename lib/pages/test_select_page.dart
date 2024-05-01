@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Tests.dart';
+import '../tests.dart';
 import '../models/TestModel.dart';
 
 class TestSelectScreen extends StatelessWidget {

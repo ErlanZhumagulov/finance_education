@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Guides.dart';
+import '../guides.dart';
 import '../models/GuideModel.dart';
 
 class GuidesSelectScreen extends StatelessWidget {

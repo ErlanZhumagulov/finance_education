@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Guides.dart';
-import '../Tests.dart';
+import '../guides.dart';
+import '../tests.dart';
 import '../models/TaskModel.dart';
 import '../models/TestModel.dart';
 
